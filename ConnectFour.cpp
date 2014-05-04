@@ -44,6 +44,7 @@ const ConnectFour::Player& ConnectFour::Player::getOpposite() const
     case PLAYER_TYPE_HUMAN:
         return getAI();
     case PLAYER_TYPE_UNKNOWN:
+    default:
         return getInvalid();
     }
 }
@@ -104,7 +105,7 @@ const ConnectFour::Move& ConnectFour::Move::getInvalid()
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // ConnectFour::Board impl
 
-ConnectFour::Board::Board() : m_filledColumns(0), m_winningPlayer(Player::getInvalid()), m_solved(false)
+ConnectFour::Board::Board() : m_filledColumns(0), m_winningPlayer(&(Player::getInvalid())), m_solved(false)
 {
 }
 
@@ -119,7 +120,7 @@ ConnectFour::Board::Board(Board&& move) : m_board(move.m_board), m_filledColumns
 {
 }
 
-ConnectFour::Board::Board(const std::list<Move>& moves) : m_winningPlayer(Player::getInvalid()), m_solved(false)
+ConnectFour::Board::Board(const std::list<Move>& moves) : m_winningPlayer(&(Player::getInvalid())), m_solved(false)
 {
     for(const Move& move : moves)
         addMove(move);
@@ -140,7 +141,7 @@ bool ConnectFour::Board::addMove(const Move& move)
     m_board[move.column()].push_back(move.player());
 
     if(m_solved)
-        m_winningPlayer = move.player();
+        m_winningPlayer = &(move.player());
     if(m_board[move.column()].size() == COLUMN_SIZE)
         ++m_filledColumns;
 
@@ -181,7 +182,7 @@ inline bool ConnectFour::Board::isInBounds(const Coordinate& coordinate) const
         && coordinate.second < COLUMN_SIZE;
 }
 
-bool ConnectFour::Board::checkMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const
+bool ConnectFour::Board::checkMove(const Coordinate& coordinate, const Player& player) const
 {
     bool ret = false;
     for(auto& direction : ITERABLE_DIRECTIONS)

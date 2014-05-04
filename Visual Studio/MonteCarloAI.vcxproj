@@ -67,6 +67,7 @@
     <ClInclude Include="..\AbstractDeterministicGame.h" />
     <ClInclude Include="..\AbstractGame.h" />
     <ClInclude Include="..\ConnectFour.h" />
+    <ClInclude Include="..\Direction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ConnectFour.cpp" />

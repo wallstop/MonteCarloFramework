@@ -81,12 +81,13 @@ public:
     private:
         bool isInBounds(const Move& move) const;
         bool isInBounds(const Coordinate& coordinate) const;
-        bool checkMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const;
+        bool checkMove(const Coordinate& coordinate, const Player& player) const;
         unsigned int recursiveCheckMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const;
 
         std::array<std::list<Player>, ROW_SIZE> m_board;
         unsigned int                            m_filledColumns;
-        Player                                  m_winningPlayer;
+        // Not an owned pointer (DO NOT DELETE)
+        const Player*                           m_winningPlayer;
         bool                                    m_solved;
     };
 
