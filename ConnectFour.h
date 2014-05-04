@@ -10,13 +10,13 @@
 #if defined ROW_SIZE
     #undef  ROW_SIZE
 #endif
-#define     ROW_SIZE 7u
+#define     ROW_SIZE 7
 
 
 #if defined COLUMN_SIZE
     #undef  COLUMN_SIZE
 #endif
-#define     COLUMN_SIZE 6u
+#define     COLUMN_SIZE 6
 
 class ConnectFour : public AbstractDeterministicGame
 {

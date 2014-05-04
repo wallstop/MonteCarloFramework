@@ -178,7 +178,7 @@ inline bool ConnectFour::Board::isInBounds(const Move& move) const
 
 inline bool ConnectFour::Board::isInBounds(const Coordinate& coordinate) const
 {
-    return coordinate.first < m_board.size()
+    return coordinate.first < (int)m_board.size()
         && coordinate.second < COLUMN_SIZE;
 }
 

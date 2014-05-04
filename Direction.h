@@ -18,11 +18,11 @@ enum Direction
     DIRECTION_NORTH_WEST    = 7
 };
 
-typedef std::pair<unsigned int, unsigned int> Coordinate;
+typedef std::pair<int, int> Coordinate;
 
 static const std::map<Direction, Coordinate>& generateDirectionMap()
 {
-    static std::map<Direction, std::pair<unsigned int, unsigned int>> ret;
+    static std::map<Direction, Coordinate> ret;
     if(ret.size() == 0)
     {
         ret[DIRECTION_NORTH] = Coordinate(0, 1);
@@ -55,7 +55,7 @@ unsigned int yIncrementFor(const Direction& direction)
     return DIRECTION_MAP.at(direction).second;
 }
 
-Coordinate getCoordinateFor(const Direction& direction)
+const Coordinate& getCoordinateFor(const Direction& direction)
 {
     return DIRECTION_MAP.at(direction);
 }
