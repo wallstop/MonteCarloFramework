@@ -193,8 +193,7 @@ bool ConnectFour::Board::checkMove(const Coordinate& coordinate, const Player& p
 
 unsigned int ConnectFour::Board::recursiveCheckMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const
 {
-    const Coordinate newCoordinate = {coordinate.first + DIRECTION_MAP.at(direction).first,
-        coordinate.second + DIRECTION_MAP.at(direction).second};
+    const Coordinate& newCoordinate = coordinate + getCoordinateFor(direction);
     if(isInBounds(newCoordinate))
         return recursiveCheckMove(newCoordinate, player, direction) + 1;
 

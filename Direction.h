@@ -3,6 +3,8 @@
 
 #include <map>
 
+// TODO: Move into class so we stop polluting the global namespace
+
 // DO NOT CHANGE THE ORDER OF THESE (necessary for getOppositeDirection(...))
 enum Direction
 {
@@ -41,4 +43,24 @@ static const std::map<Direction, Coordinate>& DIRECTION_MAP = generateDirectionM
 inline Direction getOppositeDirection(const Direction& direction)
 {
     return ((Direction)(((int)direction + 4) % 8));
+}
+
+unsigned int xIncrementFor(const Direction& direction)
+{
+    return DIRECTION_MAP.at(direction).first;
+}
+
+unsigned int yIncrementFor(const Direction& direction)
+{
+    return DIRECTION_MAP.at(direction).second;
+}
+
+Coordinate getCoordinateFor(const Direction& direction)
+{
+    return DIRECTION_MAP.at(direction);
+}
+
+Coordinate operator+(const Coordinate& lhs, const Coordinate& rhs)
+{
+    return {lhs.first + rhs.first, lhs.second + rhs.second};
 }
