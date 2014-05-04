@@ -5,6 +5,7 @@
     <ClInclude Include="..\AbstractDeterministicGame.h" />
     <ClInclude Include="..\ConnectFour.h" />
     <ClInclude Include="..\Direction.h" />
+    <ClInclude Include="..\MonteCarloAIExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ConnectFour.cpp" />

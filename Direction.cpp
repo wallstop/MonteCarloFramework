@@ -1,6 +1,6 @@
 
 #include "Direction.h"
-#include <set>
+#include <map>
 
 static const std::map<Direction::Heading, CoordinateXY> DIRECTION_COORDINATE_MAP = 
     {
@@ -25,12 +25,6 @@ static const std::map<Direction::Heading, const Direction&> HEADING_DIRECTION_MA
         {Direction::DIRECTION_WEST,         Direction::west()},
         {Direction::DIRECTION_NORTH_WEST,   Direction::northWest()}
     };
-
-template <typename T>
-inline Coordinate2D<T> Coordinate2D<T>::operator+(const Coordinate2D& rhs) const
-{
-    return {x + rhs.x, y + rhs.y};
-}
 
 inline Direction::Heading Direction::heading() const
 {

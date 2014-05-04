@@ -7,17 +7,6 @@
 #include <array>
 #include <list>
 
-#if defined ROW_SIZE
-    #undef  ROW_SIZE
-#endif
-#define     ROW_SIZE 7
-
-
-#if defined COLUMN_SIZE
-    #undef  COLUMN_SIZE
-#endif
-#define     COLUMN_SIZE 6
-
 class ConnectFour : public AbstractDeterministicGame
 {
 public:
@@ -79,6 +68,9 @@ public:
         bool isFull() const;
 
     private:
+        static const int ROW_SIZE = 6;
+        static const int COLUMN_SIZE = 7;
+
         bool isInBounds(const Move& move) const;
         bool isInBounds(const CoordinateXY& coordinate) const;
         bool checkMove(const CoordinateXY& coordinate, const Player& player) const;

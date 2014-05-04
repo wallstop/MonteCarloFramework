@@ -1,14 +1,10 @@
 
 #pragma once
 
-#include <map>
-
-// TODO: Move into class so we stop polluting the global namespace
-
-// DO NOT CHANGE THE ORDER OF THESE (necessary for getOppositeDirection(...))
+#include "MonteCarloAIExport.h"
 
 template <typename T>
-struct Coordinate2D
+struct MONTE_CARLO_EXPORT Coordinate2D
 {
     T x;
     T y;
@@ -16,9 +12,15 @@ struct Coordinate2D
     Coordinate2D operator+(const Coordinate2D& rhs) const;
 };
 
+template <typename T>
+inline Coordinate2D<T> Coordinate2D<T>::operator+(const Coordinate2D& rhs) const
+{
+    return {x + rhs.x, y + rhs.y};
+}
+
 typedef Coordinate2D<int> CoordinateXY;
 
-class Direction
+class MONTE_CARLO_EXPORT Direction
 {
 public:
     enum Heading

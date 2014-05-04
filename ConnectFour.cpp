@@ -155,7 +155,7 @@ bool ConnectFour::Board::testMove(const Move& move) const
 
     unsigned int x = move.column();
     // The move comes in on top of the column, so its (size - 1) + 1
-    unsigned int y = m_board[x].size();
+    unsigned int y = (unsigned int)m_board[x].size();
 
     return checkMove({x, y}, move.player());
 }
