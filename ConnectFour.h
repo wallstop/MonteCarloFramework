@@ -80,9 +80,9 @@ public:
 
     private:
         bool isInBounds(const Move& move) const;
-        bool isInBounds(const Coordinate& coordinate) const;
-        bool checkMove(const Coordinate& coordinate, const Player& player) const;
-        unsigned int recursiveCheckMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const;
+        bool isInBounds(const CoordinateXY& coordinate) const;
+        bool checkMove(const CoordinateXY& coordinate, const Player& player) const;
+        unsigned int recursiveCheckMove(const CoordinateXY& coordinate, const Player& player, const Direction& direction) const;
 
         std::array<std::list<Player>, ROW_SIZE> m_board;
         unsigned int                            m_filledColumns;
@@ -94,6 +94,4 @@ public:
 private:
     Board   m_board;
     std::list<Move> m_moves;
-
-
 };

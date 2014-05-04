@@ -8,5 +8,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ConnectFour.cpp" />
+    <ClCompile Include="..\Direction.cpp" />
   </ItemGroup>
 </Project>

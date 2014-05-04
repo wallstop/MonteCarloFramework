@@ -2,7 +2,7 @@
 #include "ConnectFour.h"
 
 #include <limits>
-#include <map>
+#include <assert.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@
 static const unsigned int INVALID_COLUMN = UINT_MAX;
 static const unsigned int NUM_TO_WIN = 4;
 
-static const std::list<Direction> ITERABLE_DIRECTIONS = {DIRECTION_NORTH, DIRECTION_NORTH_EAST, DIRECTION_EAST, DIRECTION_SOUTH_EAST};
+static const std::list<const Direction*> ITERABLE_DIRECTIONS = {&(Direction::north()), &(Direction::northEast()), &(Direction::east()), &(Direction::southEast())};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ bool ConnectFour::Board::testMove(const Move& move) const
     // The move comes in on top of the column, so its (size - 1) + 1
     unsigned int y = m_board[x].size();
 
-    return checkMove(std::make_pair(x, y), move.player());
+    return checkMove({x, y}, move.player());
 }
 
 inline bool ConnectFour::Board::isSolved() const
@@ -176,24 +176,28 @@ inline bool ConnectFour::Board::isInBounds(const Move& move) const
         && m_board[move.column()].size() < COLUMN_SIZE;
 }
 
-inline bool ConnectFour::Board::isInBounds(const Coordinate& coordinate) const
+inline bool ConnectFour::Board::isInBounds(const CoordinateXY& coordinate) const
 {
-    return coordinate.first < (int)m_board.size()
-        && coordinate.second < COLUMN_SIZE;
+    return coordinate.x < (int)m_board.size()
+        && coordinate.y < COLUMN_SIZE;
 }
 
-bool ConnectFour::Board::checkMove(const Coordinate& coordinate, const Player& player) const
+bool ConnectFour::Board::checkMove(const CoordinateXY& coordinate, const Player& player) const
 {
     bool ret = false;
     for(auto& direction : ITERABLE_DIRECTIONS)
-        ret = ret || (recursiveCheckMove(coordinate, player, direction) + recursiveCheckMove(coordinate, player, getOppositeDirection(direction)) + 1 >= NUM_TO_WIN);
+    {
+        if(direction == nullptr)
+            continue;
+        ret = ret || ((recursiveCheckMove(coordinate, player, *direction) + recursiveCheckMove(coordinate, player, direction->opposite())) + 1 >= NUM_TO_WIN);
+    }
 
     return ret;
 }
 
-unsigned int ConnectFour::Board::recursiveCheckMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const
+unsigned int ConnectFour::Board::recursiveCheckMove(const CoordinateXY& coordinate, const Player& player, const Direction& direction) const
 {
-    const Coordinate& newCoordinate = coordinate + getCoordinateFor(direction);
+    const CoordinateXY& newCoordinate = coordinate + direction.coordinate();
     if(isInBounds(newCoordinate))
         return recursiveCheckMove(newCoordinate, player, direction) + 1;
 

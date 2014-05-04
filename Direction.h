@@ -6,61 +6,50 @@
 // TODO: Move into class so we stop polluting the global namespace
 
 // DO NOT CHANGE THE ORDER OF THESE (necessary for getOppositeDirection(...))
-enum Direction
+
+template <typename T>
+struct Coordinate2D
 {
-    DIRECTION_NORTH         = 0,
-    DIRECTION_NORTH_EAST    = 1,
-    DIRECTION_EAST          = 2,
-    DIRECTION_SOUTH_EAST    = 3,
-    DIRECTION_SOUTH         = 4,
-    DIRECTION_SOUTH_WEST    = 5,
-    DIRECTION_WEST          = 6,
-    DIRECTION_NORTH_WEST    = 7
+    T x;
+    T y;
+
+    Coordinate2D operator+(const Coordinate2D& rhs) const;
 };
 
-typedef std::pair<int, int> Coordinate;
+typedef Coordinate2D<int> CoordinateXY;
 
-static const std::map<Direction, Coordinate>& generateDirectionMap()
+class Direction
 {
-    static std::map<Direction, Coordinate> ret;
-    if(ret.size() == 0)
+public:
+    enum Heading
     {
-        ret[DIRECTION_NORTH] = Coordinate(0, 1);
-        ret[DIRECTION_NORTH_EAST] = Coordinate(1, 1);
-        ret[DIRECTION_EAST] = Coordinate(1, 0);
-        ret[DIRECTION_SOUTH_EAST] = Coordinate(1, -1);
-        ret[DIRECTION_SOUTH] = Coordinate(0, -1);
-        ret[DIRECTION_SOUTH_WEST] = Coordinate(-1, -1);
-        ret[DIRECTION_WEST] = Coordinate(-1, 0);
-        ret[DIRECTION_NORTH_WEST] = Coordinate(-1, 1);
-    }
+        DIRECTION_NORTH         = 0,
+        DIRECTION_NORTH_EAST    = 1,
+        DIRECTION_EAST          = 2,
+        DIRECTION_SOUTH_EAST    = 3,
+        DIRECTION_SOUTH         = 4,
+        DIRECTION_SOUTH_WEST    = 5,
+        DIRECTION_WEST          = 6,
+        DIRECTION_NORTH_WEST    = 7
+    };
 
-    return ret;
-}
+    Heading                 heading() const;
+    const Direction&        opposite() const;
+    const CoordinateXY&     coordinate() const;
 
-static const std::map<Direction, Coordinate>& DIRECTION_MAP = generateDirectionMap();
+    static const Direction& north();
+    static const Direction& northEast();
+    static const Direction& east();
+    static const Direction& southEast();
+    static const Direction& south();
+    static const Direction& southWest();
+    static const Direction& west();
+    static const Direction& northWest();
 
-inline Direction getOppositeDirection(const Direction& direction)
-{
-    return ((Direction)(((int)direction + 4) % 8));
-}
+private:
+    Direction(const Heading& heading);
+    Direction(const Direction& copy);
+    Direction(Direction&& move);
 
-unsigned int xIncrementFor(const Direction& direction)
-{
-    return DIRECTION_MAP.at(direction).first;
-}
-
-unsigned int yIncrementFor(const Direction& direction)
-{
-    return DIRECTION_MAP.at(direction).second;
-}
-
-const Coordinate& getCoordinateFor(const Direction& direction)
-{
-    return DIRECTION_MAP.at(direction);
-}
-
-Coordinate operator+(const Coordinate& lhs, const Coordinate& rhs)
-{
-    return {lhs.first + rhs.first, lhs.second + rhs.second};
-}
+    Heading m_heading;
+};
