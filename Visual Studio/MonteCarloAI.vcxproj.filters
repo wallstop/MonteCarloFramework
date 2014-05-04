@@ -3,6 +3,9 @@
   <ItemGroup>
     <ClInclude Include="..\AbstractGame.h" />
     <ClInclude Include="..\AbstractDeterministicGame.h" />
-    <ClInclude Include="ConnectFour.h" />
+    <ClInclude Include="..\ConnectFour.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ConnectFour.cpp" />
   </ItemGroup>
 </Project>

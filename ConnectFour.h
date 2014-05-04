@@ -2,6 +2,7 @@
 #pragma once
 
 #include "AbstractDeterministicGame.h"
+#include "Direction.h"
 
 #include <array>
 #include <list>
@@ -26,10 +27,12 @@ public:
     public:
         enum Type
         {
-            UNKNOWN,
-            AI,
-            HUMAN
+            PLAYER_TYPE_UNKNOWN,
+            PLAYER_TYPE_AI,
+            PLAYER_TYPE_HUMAN
         };
+
+        Player(const Player& copy);
 
         static const Player&    getAI();
         static const Player&    getHuman();
@@ -38,9 +41,10 @@ public:
 
     private:
         Player();
-        Player(const Player& copy);
         Player(Player&& move);
         Player(const Type& type);
+
+        const Type m_type;
     };
 
     class Move : public AbstractMove
@@ -49,7 +53,7 @@ public:
         Move();
         Move(const Move& copy);
         Move(Move&& move);
-        Move(const Player& player, int column);
+        Move(const Player& player, unsigned int column);
         
         unsigned int            column() const;
         const Player&           player() const;
@@ -75,8 +79,12 @@ public:
         bool isFull() const;
 
     private:
+        bool isInBounds(const Move& move) const;
+        bool isInBounds(const Coordinate& coordinate) const;
+        bool checkMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const;
+        unsigned int recursiveCheckMove(const Coordinate& coordinate, const Player& player, const Direction& direction) const;
+
         std::array<std::list<Player>, ROW_SIZE> m_board;
-        std::list<Move>                         m_moves;
         unsigned int                            m_filledColumns;
         Player                                  m_winningPlayer;
         bool                                    m_solved;
@@ -84,6 +92,7 @@ public:
 
 private:
     Board   m_board;
+    std::list<Move> m_moves;
 
 
 };

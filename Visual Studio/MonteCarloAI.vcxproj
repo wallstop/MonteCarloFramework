@@ -66,7 +66,10 @@
   <ItemGroup>
     <ClInclude Include="..\AbstractDeterministicGame.h" />
     <ClInclude Include="..\AbstractGame.h" />
-    <ClInclude Include="ConnectFour.h" />
+    <ClInclude Include="..\ConnectFour.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ConnectFour.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
